@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sfdc-boilerplate" xmlns:ff="antlib:com.spaceheroes" default="test">
+
+    <!-- 
+    This assumes forceflow.jar is copied 
+    in a folder named "lib"
+    ====================================== -->
+    <path id="ant.additions.classpath">
+        <fileset dir="./lib/" includes="*.jar"/>
+    </path>
+    <taskdef resource="antlib.xml" uri="antlib:com.spaceheroes" classpathref="ant.additions.classpath" />
+
+	<property environment="env"/>
+
+	<target name="test">
+		<ff:runtests 
+			username="${env.username}" password="${env.password}" serverurl="${env.serverurl}" 
+			testReportsDir="${env.CIRCLE_TEST_REPORTS}" />
+	</target>
+
+</project>
