@@ -13,7 +13,9 @@
 	<property environment="env"/>
 
 	<target name="test">
-		<forceflow:runtests username="${env.username}" password="${env.password}" serverurl="${env.serverurl}" />
+		<forceflow:runtests 
+			username="${env.username}" password="${env.password}" serverurl="${env.serverurl}"
+			testReportsDir="${env.CIRCLE_TEST_REPORTS}" />
 	</target>
 
 </project>
