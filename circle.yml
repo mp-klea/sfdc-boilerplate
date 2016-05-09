@@ -6,4 +6,5 @@ machine:
     
 test:
   override:
-  	- ant -f build/build.xml
+  	- ant -f build/build.xml -lib build/lib/ Build: 
+        timeout: 600
