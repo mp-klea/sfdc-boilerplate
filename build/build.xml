@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sfdc-boilerplate" xmlns:forceflow="antlib:com.spaceheroes">
+
+    <!-- 
+    This assumes forceflow.jar is copied 
+    in a folder named "lib"
+    ====================================== -->
+    <path id="ant.additions.classpath">
+        <fileset dir="./lib/" includes="*.jar"/>
+    </path>
+    <taskdef resource="com/spaceheroes/task/antlib.xml" uri="antlib:com.spaceheroes" classpathref="ant.additions.classpath" />
+	
+	<property environment="env"/>
+
+    <!--
+    You can now define Ant targets and 
+    use any ForceFlow tasks within.
+    ====================================== -->
+	<forceflow:runtests username="${env.username}" password="${env.password}" serverurl="${env.serverurl}" />
+
+</project>

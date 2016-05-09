@@ -1,0 +1,10 @@
+machine:
+  environment:
+    username: lorenzo.frattini@makepositive.devorg2.com	
+    password: test123@1nZNXoQL8QjHI3wQve58MRiw
+    serverurl: login.salesforce.com
+    
+test:
+  override:
+    - ant -lib lib/ Build: 
+        timeout: 600
