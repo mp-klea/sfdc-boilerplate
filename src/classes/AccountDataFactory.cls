@@ -1,4 +1,4 @@
-@IsTest
+//@IsTest
 public class AccountDataFactory extends DataFactory {
     
     public AccountDataFactory(SObjectType objectType) {
@@ -8,7 +8,7 @@ public class AccountDataFactory extends DataFactory {
     public SObject build() {
         Account a = new Account();
         a.Name = 'My test account {0}';
-        a.Description = '50130000000014C';
+        a.Description = 'My test account description {0}';
         return a;
     }
     

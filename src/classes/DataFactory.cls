@@ -1,12 +1,46 @@
 public abstract class DataFactory {
 
-	private Schema.DescribeSObjectResult dsr;
+	private Set<SObjectField> fieldsToReplace = new Set<SObjectField>();
 	private sObjectType objectType;
     private static SObject defaultInstance;
     
     public DataFactory(SObjectType objectType) {
         this.objectType = objectType;
-        this.dsr = objectType.getDescribe();
+        
+        init();
+    }
+    
+    private void init() {
+    	Schema.DescribeSObjectResult dsr = objectType.getDescribe();
+    	Map<String, Schema.SObjectField> fieldMap = dsr.fields.getMap();
+        Integer i = 1;
+        for (String fieldName : fieldMap.keySet()){
+   			SObjectField sField = fieldMap.get(fieldName);
+            Schema.DescribeFieldResult dField = sField.getDescribe();
+            Schema.DisplayType fldType = dField.getType();            
+            if (Schema.DisplayType.STRING.equals(fldType) || Schema.DisplayType.TextArea.equals(fldType)) {
+            	fieldsToReplace.add(sField);
+            }
+        }
+    }
+    
+    private void prePopulate(SObject item) {
+    	prePopulate(new List<SObject> {item});
+    }
+    
+    private void prePopulate(List<SObject> items) {    	
+        Integer i = 1;
+        for (SObject item : items) {
+	        for (Schema.SObjectField sField : fieldsToReplace) {
+	        	String value = (String) item.get(sField);
+	        	if (value!=null) {
+	        		List<String> fillers = new List<String> { String.valueOf(i) };
+					String formatted = String.format(value, fillers);
+					item.put(sField, formatted);
+	        	}
+			}
+			i++;
+        }
     }
 	
 	public SObject getDefault() {
@@ -18,8 +52,9 @@ public abstract class DataFactory {
     
     abstract SObject build();
     
-	SObject create() {
+	public SObject create() {
         SObject item = build();
+        prePopulate(item);
         insert item;
         return item;
     }
