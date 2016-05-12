@@ -1,49 +1,42 @@
 public abstract class DataFactory {
 
-	private Set<SObjectField> fieldsToReplace = new Set<SObjectField>();
-	private sObjectType objectType;
+	private static Set<SObjectField> fieldsToPatch = new Set<SObjectField>();
+	private static sObjectType objectType;
     private static SObject defaultInstance;
+    private Integer countInstances = 0;
     
-    public DataFactory(SObjectType objectType) {
-        this.objectType = objectType;
-        
+    public DataFactory(SObjectType anObjectType) {
+        objectType = anObjectType;        
         init();
     }
     
     private void init() {
     	Schema.DescribeSObjectResult dsr = objectType.getDescribe();
     	Map<String, Schema.SObjectField> fieldMap = dsr.fields.getMap();
-        Integer i = 1;
         for (String fieldName : fieldMap.keySet()){
    			SObjectField sField = fieldMap.get(fieldName);
             Schema.DescribeFieldResult dField = sField.getDescribe();
             Schema.DisplayType fldType = dField.getType();            
             if (Schema.DisplayType.STRING.equals(fldType) || Schema.DisplayType.TextArea.equals(fldType)) {
-            	fieldsToReplace.add(sField);
+            	fieldsToPatch.add(sField);
             }
         }
     }
     
-    private void prePopulate(SObject item) {
-    	prePopulate(new List<SObject> {item});
-    }
-    
-    private void prePopulate(List<SObject> items) {    	
-        Integer i = 1;
-        for (SObject item : items) {
-	        for (Schema.SObjectField sField : fieldsToReplace) {
-	        	String value = (String) item.get(sField);
-	        	if (value!=null) {
-	        		List<String> fillers = new List<String> { String.valueOf(i) };
-					String formatted = String.format(value, fillers);
-					item.put(sField, formatted);
-	        	}
-			}
-			i++;
-        }
+    private void prePopulate(SObject item) {    	
+        Integer i = 0;
+        for (Schema.SObjectField sField : fieldsToPatch) {
+        	String value = (String) item.get(sField);
+        	if (value!=null) {
+        		List<String> fillers = new List<String> { String.valueOf(countInstances + i) };
+				String formatted = String.format(value, fillers);
+				item.put(sField, formatted);
+        	}
+		}
+		i++;
     }
 	
-	public SObject getDefault() {
+	public SObject getDefaultInstance() {
 		if (defaultInstance == null) {
 			defaultInstance = create();
 		}
@@ -54,9 +47,14 @@ public abstract class DataFactory {
     
 	public SObject create() {
         SObject item = build();
+        countInstances++;
         prePopulate(item);
         insert item;
         return item;
+    }
+    
+    public Integer getInstanceCount() {
+    	return countInstances;
     }
     
 
