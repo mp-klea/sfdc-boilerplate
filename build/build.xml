@@ -12,24 +12,14 @@
 
 	<property environment="env"/>
 	
-	<echo message="ev_username: ${env.ev_username}"/>
-	<echo message="username:    ${env.username}"/>
-	<echo message="ev_passwordtoken: ${env.ev_passwordtoken}"/>
-	<echo message="password:             ${env.password}"/>
-	<echo message="ev_serverurl: ${env.ev_serverurl}"/>
-	<echo message="eserverurl:   ${env.serverurl}"/>
-
 	<target name="test">
-		<!-- <ff:runtests 
-			username="${env.username}" password="${env.password}" serverurl="${env.serverurl}" 
-			testReportsDir="${env.CIRCLE_TEST_REPORTS}" /> -->
 		
 		<ff:runtests 
 				username="${env.ev_username}" password="${env.ev_passwordtoken}" serverurl="${env.ev_serverurl}" 
 				testReportsDir="${env.CIRCLE_TEST_REPORTS}" />
 			
 		<!-- <sf:deploy username="${env.ev_username}"
-		password="${env.ev_password}${env.ev_token}"
+		password="${env.ev_passwordtoken}"
 		serverurl="${env.ev_serverurl}" maxPoll="500"
 		pollWaitMillis="5000" deployRoot="src"
 		testLevel="RunLocalTests" checkOnly="true" /> -->
