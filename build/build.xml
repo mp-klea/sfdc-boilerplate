@@ -20,9 +20,13 @@
 	<echo message="eserverurl:   ${env.serverurl}"/>
 
 	<target name="test">
-		<ff:runtests 
+		<!-- <ff:runtests 
 			username="${env.username}" password="${env.password}" serverurl="${env.serverurl}" 
-			testReportsDir="${env.CIRCLE_TEST_REPORTS}" />
+			testReportsDir="${env.CIRCLE_TEST_REPORTS}" /> -->
+		
+		<ff:runtests 
+				username="${env.ev_username}" password="${env.ev_password}${env.ev_token}" serverurl="${env.ev_serverurl}" 
+				testReportsDir="${env.CIRCLE_TEST_REPORTS}" />
 			
 		<!-- <sf:deploy username="${env.ev_username}"
 		password="${env.ev_password}${env.ev_token}"
