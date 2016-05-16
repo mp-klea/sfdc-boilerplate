@@ -1,7 +1,7 @@
 machine:
   environment:
     username: klea@1makepositive.ci.test	
-    password: x
+    password: TheStoneRoses2016C4RWq0CppP6w5u7RAcp9dEK3w
     serverurl: login.salesforce.com
     
 test:
