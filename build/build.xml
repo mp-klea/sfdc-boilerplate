@@ -24,7 +24,7 @@
 		<sf:deploy username="${env.ev_username}"
 		password="${env.ev_password}${env.ev_token}"
 		serverurl="${env.ev_serverurl}" maxPoll="500"
-		pollWaitMillis="5000" zipFile="${src.dir}/batch.zip"
+		pollWaitMillis="5000" deployRoot="mypkg"
 		testLevel="RunLocalTests" checkOnly="true" />
 		
 	</target>
