@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="sfdc-boilerplate" xmlns:ff="antlib:com.spaceheroes" default="test">
+<project name="sfdc-boilerplate" basedir="." xmlns:sf="antlib:com.salesforce" xmlns:ff="antlib:com.spaceheroes" default="test">
 
     <!-- 
     This assumes forceflow.jar is copied 
@@ -21,7 +21,7 @@
 			username="${env.ev_username}" password="${env.ev_password}${env.ev_token}" serverurl="${env.ev_serverurl}" 
 			testReportsDir="${env.CIRCLE_TEST_REPORTS}" /> -->
 			
-		<sfdeploy username="${env.ev_username}"
+		<sf:deploy username="${env.ev_username}"
 		password="${env.ev_password}${env.ev_token}"
 		serverurl="${env.ev_serverurl}" maxPoll="500"
 		pollWaitMillis="5000" zipFile="${src.dir}/batch.zip"
