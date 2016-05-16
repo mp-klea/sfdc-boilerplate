@@ -11,6 +11,10 @@
     <taskdef resource="antlib.xml" uri="antlib:com.spaceheroes" classpathref="ant.additions.classpath" />
 
 	<property environment="env"/>
+	
+	<echo message="ev_username: ${env.ev_username}"/>
+	<echo message="ev_password ev_token${env.ev_password}${env.ev_token}"/>
+	<echo message="ev_serverurl: ${env.ev_serverurl}"/>
 
 	<target name="test">
 		<ff:runtests 
