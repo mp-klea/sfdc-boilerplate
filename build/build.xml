@@ -14,7 +14,7 @@
 
 	<target name="test">
 		<ff:runtests 
-			username="${env.ev_username}" password="${env.ev_password}" serverurl="${env.ev_serverurl}" 
+			username="${env.ev_username}" password="${env.ev_password}${env.ev_token}" serverurl="${env.ev_serverurl}" 
 			testReportsDir="${env.CIRCLE_TEST_REPORTS}" />
 	</target>
 
